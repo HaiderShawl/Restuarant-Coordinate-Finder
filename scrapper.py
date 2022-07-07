@@ -13,17 +13,13 @@ import sys
 import pandas as pd
 
 
-from selenium.webdriver.chrome.options import Options
-chrome_options = Options()
-chrome_options.add_experimental_option("detach", True)
-
 # declaring a variable to store the final data
 final_data = [["Restaurant Name", "Latitude", "Longitude"]]
 
 # configuring selenium chrome driver
 service = Service(
     executable_path="/Users/haidershawl/Desktop/Anakin (YC)/chromedriver")
-driver = webdriver.Chrome(service=service, options=chrome_options)
+driver = webdriver.Chrome(service=service)
 
 
 # opening the target website
@@ -94,6 +90,7 @@ for request in driver.requests:
     if request.response and request.url == 'https://portal.grab.com/foodweb/v2/search':
         body = decode(request.response.body, request.response.headers.get(
             'Content-Encoding', 'identity'))
+        # removing js formatting from body
         body = body.decode()
         body = body.replace('\\\"', '')
         body = body.replace('\\ "', '')
@@ -109,7 +106,8 @@ for request in driver.requests:
                   value["latlng"]["longitude"])
 
 
+# saving the final data to a csv file
 df = pd.DataFrame(final_data)
 df.to_csv(location + '.csv', index=False)
 
-# driver.quit()
+driver.quit()
