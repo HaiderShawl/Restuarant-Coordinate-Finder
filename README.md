@@ -1,4 +1,4 @@
-# Anakin-YC-Assignment
+# Restuarant-Coordinate-Finder
 
 A web scrapper which extracts latitudes and longitudes of all the restaurants around a location (in Singapore, Malaysia, Thailand, Philippines) from https://food.grab.com/sg/en/
 
